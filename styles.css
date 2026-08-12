@@ -180,17 +180,14 @@ a:hover {
   text-align: center;
   position: relative;
   z-index: 1;
-  /* Stacked shadows keep the hero legible over the video without a dimming
-     panel behind it: tight halos define the letter edges, then progressively
-     wider layers pool darkness around the whole text block. Overlapping
-     shadows compound, so the near-black wide layers do most of the work.
-     text-shadow inherits, so every child picks this up. */
+  /* Three stacked shadows — a tight halo for edge definition, a short drop,
+     and a wide ambient glow — keep the hero legible over the video without
+     resorting to a dimming panel behind it. text-shadow inherits, so every
+     child picks this up. */
   text-shadow:
-    0 0 6px #000,
-    0 0 14px #000,
-    0 3px 16px #000,
-    0 0 40px rgba(0, 0, 0, 0.95),
-    0 0 90px rgba(0, 0, 0, 0.9);
+    0 0 4px rgba(0, 0, 0, 0.95),
+    0 2px 12px rgba(0, 0, 0, 0.9),
+    0 0 50px rgba(0, 0, 0, 0.8);
 }
 
 /* The toast sits on its own solid panel, so it doesn't need the halo. */
@@ -297,8 +294,9 @@ a:hover {
   left: 50%;
   top: 100%;
   transform: translate(-50%, 4px);
-  background: var(--surface);
+  background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
   border: 1px solid var(--border);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
   color: var(--text);
   font-size: 0.76rem;
   font-weight: 500;
@@ -354,17 +352,22 @@ a:hover {
 }
 
 /* ============ Blog teaser (homepage) ============ */
+/* The sheen + resting shadow are what keep a flat-colored panel from reading
+   as a plain rectangle: a faint top-down highlight suggests a light source,
+   and the drop shadow lifts the card off the page. */
 .blog-teaser {
   display: block;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
   padding: 1.1rem 1.3rem;
   margin-bottom: 1.5rem;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .blog-teaser:hover {
   border-color: rgba(255, 63, 216, 0.35);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
   text-decoration: none;
 }
 
@@ -375,7 +378,7 @@ a:hover {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
 }
 
 .blog-teaser-title {
@@ -393,8 +396,10 @@ a:hover {
 .blog-teaser-excerpt {
   color: var(--text-soft);
   font-size: 0.88rem;
-  margin-top: 0.5rem;
-  line-height: 1.6;
+  margin-top: 0.35rem;
+  /* Tighter than the 1.65 body default — the excerpt is a short two-line
+     block, so generous leading just pulls the card apart. */
+  line-height: 1.45;
 }
 
 .blog-teaser-cta {
@@ -402,7 +407,7 @@ a:hover {
   text-align: right;
   color: var(--accent);
   font-size: 0.84rem;
-  margin-top: 0.6rem;
+  margin-top: 0.4rem;
 }
 
 /* ============ Projects (3-column terminal card grid) ============ */
@@ -420,9 +425,10 @@ a:hover {
 }
 
 .project {
-  background: var(--surface);
+  background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
   border: 1px solid var(--border);
   border-radius: 0;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -431,7 +437,7 @@ a:hover {
 
 .project:hover {
   border-color: rgba(255, 63, 216, 0.35);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
 }
 
 .project-termbar {
@@ -479,10 +485,52 @@ a:hover {
   border-color: rgba(46, 230, 255, 0.3);
 }
 
+/* Archived reads as dormant on purpose: a desaturated lavender pulled from
+   the muted text tone, so it recedes next to the live neon statuses instead
+   of competing with them for attention. */
+.status--archived {
+  color: #b0a4cf;
+  background: rgba(176, 164, 207, 0.07);
+  border-color: rgba(176, 164, 207, 0.28);
+}
+
+/* Source-available sits between open (pink) and closed (gold) as a licence,
+   so it takes the coral that falls between them on the hue wheel — also a
+   Miami sunset tone, so it stays inside the palette. */
+.status--source-available {
+  color: #ff7a5c;
+  background: rgba(255, 122, 92, 0.08);
+  border-color: rgba(255, 122, 92, 0.32);
+}
+
+/* The media band is an <a> wrapping the whole thumbnail, so it needs an
+   explicit display (anchors are inline) and no underline on hover. The inner
+   media dims slightly on hover as the affordance that it's clickable. */
 .project-media {
+  display: block;
   padding: 0.7rem;
   background: rgba(0, 0, 0, 0.16);
   border-bottom: 1px solid var(--border);
+}
+
+.project-media:hover {
+  text-decoration: none;
+}
+
+.project-media img,
+.project-media video,
+.project-media--glyph span {
+  transition: opacity 0.15s ease, transform 0.25s ease;
+}
+
+.project-media:hover img,
+.project-media:hover video {
+  opacity: 0.82;
+}
+
+.project-media:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .project-media img,
@@ -589,6 +637,18 @@ a:hover {
 .tag-postgres { color: #4d9fd6; background: rgba(77, 159, 214, 0.08);  border-color: rgba(77, 159, 214, 0.32); }
 .tag-prisma   { color: #2ec4a6; background: rgba(46, 196, 166, 0.08);  border-color: rgba(46, 196, 166, 0.32); }
 .tag-vercel   { color: #f4f4f5; background: rgba(244, 244, 245, 0.06); border-color: rgba(244, 244, 245, 0.28); }
+.tag-swift    { color: #f05138; background: rgba(240, 81, 56, 0.08);   border-color: rgba(240, 81, 56, 0.32); }
+.tag-swiftui  { color: #5ac8fa; background: rgba(90, 200, 250, 0.08);  border-color: rgba(90, 200, 250, 0.32); }
+.tag-firebase { color: #ffca28; background: rgba(255, 202, 40, 0.08);  border-color: rgba(255, 202, 40, 0.32); }
+.tag-firestore{ color: #ffa000; background: rgba(255, 160, 0, 0.08);   border-color: rgba(255, 160, 0, 0.32); }
+.tag-mapkit   { color: #34c759; background: rgba(52, 199, 89, 0.08);   border-color: rgba(52, 199, 89, 0.32); }
+.tag-corelocation { color: #30b0c7; background: rgba(48, 176, 199, 0.08); border-color: rgba(48, 176, 199, 0.32); }
+.tag-xcode    { color: #147efb; background: rgba(20, 126, 251, 0.08);  border-color: rgba(20, 126, 251, 0.32); }
+.tag-unity    { color: #e2e2e6; background: rgba(226, 226, 230, 0.06); border-color: rgba(226, 226, 230, 0.28); }
+.tag-csharp   { color: #b06fc4; background: rgba(176, 111, 196, 0.08); border-color: rgba(176, 111, 196, 0.32); }
+.tag-openxr   { color: #6fc48f; background: rgba(111, 196, 143, 0.08); border-color: rgba(111, 196, 143, 0.32); }
+.tag-oculus   { color: #4a9df5; background: rgba(74, 157, 245, 0.08);  border-color: rgba(74, 157, 245, 0.32); }
+.tag-steamvr  { color: #66c0f4; background: rgba(102, 192, 244, 0.08); border-color: rgba(102, 192, 244, 0.32); }
 
 .project-links {
   display: flex;
@@ -637,24 +697,32 @@ a:hover {
 
 /* ============ Blog index ============ */
 .blog-index {
-  padding: 3.5rem 0 5rem;
+  padding: 2rem 0 5rem;
   position: relative;
   z-index: 1;
 }
 
+/* Centered column, matching the reference's 928px content width. One measure
+   governs both the text and the rules, so a divider never runs wider than the
+   excerpt it separates. */
 .post-list {
   list-style: none;
   display: flex;
   flex-direction: column;
+  max-width: 58rem;
+  margin: 0 auto;
 }
 
+/* Rule sits on border-top so a line appears above the first title, not just
+   between rows; the last row closes the list with a matching bottom rule. */
 .post-row {
-  padding: 1.3rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 1.05rem 0;
 }
 
-.post-row:first-child {
-  padding-top: 0;
+/* Divider only between rows — no line above the first or below the last,
+   which read as stray/floating rather than framing the list. */
+.post-row + .post-row {
+  border-top: 1px solid var(--border);
 }
 
 .post-link {
@@ -676,13 +744,16 @@ a:hover {
   display: block;
   font-size: 0.78rem;
   color: var(--text-muted);
-  margin: 0.3rem 0 0.5rem;
+  margin: 0.2rem 0 0.35rem;
 }
 
+/* Same tightened leading as the homepage teaser — the 1.65 body default is
+   for long-form reading and pulls a short excerpt apart. Width comes from
+   .post-list so text and rules stay flush. */
 .post-excerpt {
   color: var(--text-soft);
   font-size: 0.86rem;
-  max-width: 65ch;
+  line-height: 1.45;
 }
 
 .empty {
@@ -767,9 +838,10 @@ a:hover {
 }
 
 .prose pre {
-  background: var(--surface);
+  background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
   padding: 1rem 1.2rem;
   overflow-x: auto;
 }
@@ -784,9 +856,13 @@ a:hover {
   position: relative;
   margin: 0.5rem 0;
   padding: 1rem 1.3rem 1rem 2.4rem;
-  background: linear-gradient(120deg, rgba(255, 63, 216, 0.07), transparent 65%), var(--surface);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%),
+    linear-gradient(120deg, rgba(255, 63, 216, 0.07), transparent 65%),
+    var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
   color: var(--text-muted);
   font-style: italic;
 }
@@ -816,8 +892,7 @@ a:hover {
 
 /* ============ Footer ============ */
 .site-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.75rem 1.5rem;
+  padding: 0 1.5rem 1.75rem;
   color: var(--text-muted);
   font-size: 0.82rem;
   text-align: center;
@@ -825,13 +900,38 @@ a:hover {
   z-index: 1;
 }
 
+/* Same as the header: the rule sits on the centered inner wrapper so it
+   matches the content column width rather than running full-bleed. */
+/* Footer is one shared partial across every page, but its rule width tracks
+   whatever content column that page actually has: the project grid on the
+   homepage (var(--max-width), the default), the post list on the blog index
+   (matches .post-list), the prose column on an individual post (matches
+   .prose). body class is set per page — page-home on index.html, page-blog /
+   page-post filled into partials/layout.html by scripts/blog.mjs. */
 .footer-inner {
   max-width: var(--max-width);
   margin: 0 auto;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+/* .project-grid has no measure of its own — it just fills whatever's left
+   inside .page after its 1.5rem side padding, so matching it means matching
+   that same subtraction, not var(--max-width) directly. */
+.page-home .footer-inner {
+  max-width: calc(var(--max-width) - 3rem);
+}
+
+.page-blog .footer-inner {
+  max-width: 58rem;
+}
+
+.page-post .footer-inner {
+  max-width: 68ch;
 }
 
 .footer-row {
@@ -881,6 +981,34 @@ a:hover {
 
 .to-top {
   color: var(--accent) !important;
+}
+
+/* Blog pages only: fold "Back to top" into the same line as the rest of the
+   footer instead of stacking it below. .footer-inner switches from a
+   column (row, then to-top centered underneath) to a wrapping row so to-top
+   becomes just another item after the email line, with a "·" to match the
+   separators already used between the other items. */
+.page-blog .footer-inner,
+.page-post .footer-inner {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* Tighter than the homepage's 0.9rem: at the blog's narrower 928px column
+     the default spacing left the row 19px too wide, wrapping "Back to top"
+     onto its own line. */
+  gap: 0.4rem 0.5rem;
+}
+
+.page-blog .footer-row,
+.page-post .footer-row {
+  gap: 0.4rem 0.5rem;
+}
+
+.page-blog .to-top::before,
+.page-post .to-top::before {
+  content: "·";
+  color: rgba(214, 202, 240, 0.3);
+  margin-right: 0.5rem;
 }
 
 /* ============ Scroll reveal ============ */

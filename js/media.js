@@ -11,7 +11,10 @@
 // the same time, and prefers-reduced-motion / Save-Data skip video entirely
 // in favor of the poster frame.
 
-const MAX_CONCURRENT = 2;
+// One full grid row is three cards wide, so a lower cap would leave the third
+// card frozen on its poster beside two animating neighbours. Still far below
+// the "preload and autoplay everything" behaviour this system exists to avoid.
+const MAX_CONCURRENT = 3;
 let active = 0;
 const waiting = [];
 

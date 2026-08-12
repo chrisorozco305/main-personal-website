@@ -98,7 +98,9 @@ function tagList(tags) {
   return `<ul class="tags">${tags.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>`;
 }
 
-/** One row of the blog index: stacked title / date / excerpt. */
+/** One row of the blog index: stacked title / date / excerpt. Tags stay in
+ *  frontmatter and still render on the post page itself — the index is meant
+ *  to scan quickly, so it carries only those three lines. */
 export function postRow(post) {
   return `        <li class="post-row reveal">
           <a class="post-link" href="${post.url}">
@@ -106,7 +108,6 @@ export function postRow(post) {
           </a>
           <time class="post-date" datetime="${post.date}">${post.date}</time>
           <p class="post-excerpt">${escapeHtml(post.excerpt)}</p>
-          ${tagList(post.tags)}
         </li>`;
 }
 
@@ -171,6 +172,7 @@ export function generate(root) {
     bodyClass: "page-blog",
     navLabel: "blog",
     navHref: "/blog/",
+    footerTagline: "Software Engineer | Game Developer",
     content: `    <section class="blog-index">
       ${rows}
     </section>`,
@@ -186,6 +188,7 @@ export function generate(root) {
       bodyClass: "page-post",
       navLabel: "blog",
     navHref: "/blog/",
+    footerTagline: "Software Engineer | Game Developer",
       content: `    <article class="post">
       <header class="post-header">
         <a class="back-link" href="/blog/">← All posts</a>

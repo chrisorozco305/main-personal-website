@@ -7,7 +7,7 @@
   <meta name="description" content="Portfolio of Christian Orozco, software engineer. Selected projects, writing, and background." />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
+<body class="page-home">
 
   <!--#include partials/header.html-->
 
@@ -31,8 +31,8 @@
 
     <!-- ============ INTRO ============ -->
     <section class="intro reveal">
-      <h1 class="intro-heading">Christian Orozco <span class="intro-sep">|</span> Software Engineer</h1>
-      <p class="intro-bio">I'm a computer science graduate from FIU, based in Miami, with 5+ years of engineering experience. I work mostly in web and game development, and most of what I build starts as something I wanted to exist and didn't — AI planning tools grounded in real data, browser extensions, and experiments with no dependencies at all.</p>
+      <h1 class="intro-heading">Software Engineer <span class="intro-sep">|</span> Game Developer</h1>
+      <p class="intro-bio">I'm a computer science graduate from FIU, based in Miami, with 5+ years of engineering experience. I work mostly in web and game development, and most of what I build starts as something I wanted to make for fun.</p>
       <p class="intro-cta">Interested in Web or Game Development? Let's talk.</p>
       <p class="intro-contact">
         <a href="https://github.com/chrisorozco305" target="_blank" rel="noopener">github: <strong>@chrisorozco305</strong></a>
@@ -60,9 +60,15 @@
             <h3>Vocation</h3>
             <span class="status status--closed">closed source</span>
           </div>
-          <div class="project-media" data-media>
-            <img src="/images/vocation-main.png" alt="Vocation app screenshot" loading="lazy" decoding="async" width="960" height="600" />
-          </div>
+          <a class="project-media" href="https://vocation.bz" target="_blank" rel="noopener" data-media aria-label="Visit Vocation">
+            <video
+              data-src="/media/vocation.webm"
+              poster="/media/vocation-poster.webp"
+              muted loop playsinline preload="none"
+              width="800" height="450"
+              disablepictureinpicture
+              aria-hidden="true"></video>
+          </a>
           <div class="project-content">
             <p class="project-subtitle">Career planning on real institutional data</p>
             <p class="project-desc">An AI planning tool that maps the full route from a program a student can enroll in today to the career they're aiming at — degrees, transfers, licensing exams, and cost at each step. Vocation generates pathways with Gemini and then grounds them against sources that can be checked: <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener">Bureau of Labor Statistics</a> wage surveys, the Department of Education's <a href="https://collegescorecard.ed.gov/" target="_blank" rel="noopener">College Scorecard</a>, <a href="https://www.onetonline.org/" target="_blank" rel="noopener">O*NET</a>, and scraped program catalogs from 53 Florida institutions. The governing constraint is that measured and estimated figures are never allowed to blur together — a wage from a federal survey carries its year and its source, a model's judgement is labelled as one, and a school we hold no data for gets no figure at all rather than an estimate standing in for one. Started as a hackathon project and carried independently to <a href="https://vocation.bz" target="_blank" rel="noopener">production</a>.</p>
@@ -77,10 +83,62 @@
 
         <li class="project reveal">
           <div class="project-termbar">
+            <h3>CatTrax</h3>
+            <span class="status status--source-available">source available</span>
+          </div>
+          <a class="project-media" href="https://github.com/CatTrax-Studios/CatTrax" target="_blank" rel="noopener" data-media aria-label="View CatTrax source on GitHub">
+            <video
+              data-src="/media/cattrax.webm"
+              poster="/media/cattrax-poster.webp"
+              muted loop playsinline preload="none"
+              width="800" height="450"
+              disablepictureinpicture
+              aria-hidden="true"></video>
+          </a>
+          <div class="project-content">
+            <p class="project-subtitle">An endless runner on a rotating toy train set</p>
+            <p class="project-desc">A VR endless runner played at desk scale. You stand over a toy train set in a bedroom and drive a cat-conducted locomotive around a wooden turntable — the disc spins beneath the train, which turns three concentric rings of track into three lanes, and switching between them to dodge rocks is the whole game. The fail state is a countdown clock rather than a health bar alone: coal grabbed off the track buys seconds back, cardboard gives a shield, and score accrues from how fast the table is spinning. There is no HUD anywhere. Time, score, and health live on a physical alarm clock sitting on the desk, and the achievement list is a wall of WANTED posters that flip over as you clear the grasslands, the volcano, and the underground cavern. Built over two semesters by a ten-person team at <a href="https://www.weareinit.org/" target="_blank" rel="noopener">INIT Build</a>, on <a href="https://unity.com/releases/lts" target="_blank" rel="noopener">Unity 2022 LTS</a> with the <a href="https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@2.5/manual/index.html" target="_blank" rel="noopener">XR Interaction Toolkit</a>.</p>
+            <ul class="tags">
+              <li class="tag-unity">unity</li><li class="tag-csharp">c#</li><li>xr-interaction-toolkit</li><li class="tag-openxr">openxr</li><li class="tag-oculus">oculus</li><li class="tag-steamvr">steamvr</li><li>urp</li><li>shadergraph</li>
+            </ul>
+            <div class="project-links">
+              <a class="gh-button" href="https://github.com/CatTrax-Studios/CatTrax" target="_blank" rel="noopener">View Source on GitHub</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="project reveal">
+          <div class="project-termbar">
+            <h3>iBartender</h3>
+            <span class="status status--archived">archived</span>
+          </div>
+          <a class="project-media" href="https://github.com/IOSCapstone/iBartender" target="_blank" rel="noopener" data-media aria-label="View iBartender source on GitHub">
+            <video
+              data-src="/media/ibartender.webm"
+              poster="/media/ibartender-poster.webp"
+              muted loop playsinline preload="none"
+              width="640" height="360"
+              disablepictureinpicture
+              aria-hidden="true"></video>
+          </a>
+          <div class="project-content">
+            <p class="project-subtitle">Recipe search and bar discovery on iOS</p>
+            <p class="project-desc">A SwiftUI app for finding a drink and somewhere to have it. The cocktail feed pulls from <a href="https://www.thecocktaildb.com/api.php" target="_blank" rel="noopener">TheCocktailDB</a> — the full cocktail category on launch, then name search on submit — and each result opens to ingredients, measures, and instructions. Accounts and session state run on <a href="https://firebase.google.com/docs/auth" target="_blank" rel="noopener">Firebase Auth</a>; saved recipes persist to <a href="https://firebase.google.com/docs/firestore" target="_blank" rel="noopener">Cloud Firestore</a>. The bar finder is deliberately not a third-party places integration: it takes a CoreLocation fix and runs <a href="https://developer.apple.com/documentation/mapkit/mklocalsearch" target="_blank" rel="noopener">MKLocalSearch</a> inside a 5km region, so results come from Apple's own map data with no extra API key or quota to manage. Networking, models, and screens sit in separate layers, so a view never touches a URL directly. Built by a four-person team for a <a href="https://www.codepath.org/" target="_blank" rel="noopener">CodePath</a> iOS capstone at FIU and <a href="https://github.com/IOSCapstone/iBartender" target="_blank" rel="noopener">archived</a> when the course ended.</p>
+            <ul class="tags">
+              <li class="tag-swift">swift</li><li class="tag-swiftui">swiftui</li><li class="tag-firebase">firebase</li><li class="tag-firestore">firestore</li><li class="tag-mapkit">mapkit</li><li class="tag-corelocation">corelocation</li><li>thecocktaildb</li><li class="tag-xcode">xcode</li>
+            </ul>
+            <div class="project-links">
+              <a class="gh-button" href="https://github.com/IOSCapstone/iBartender" target="_blank" rel="noopener">View Source on GitHub</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="project reveal">
+          <div class="project-termbar">
             <h3>YouTube Downloader</h3>
             <span class="status status--open">open source</span>
           </div>
-          <div class="project-media" data-media>
+          <a class="project-media" href="https://github.com/chrisorozco305/youtube-downloader" target="_blank" rel="noopener" data-media aria-label="View YouTube Downloader source on GitHub">
             <video
               data-src="/media/demo-loop.webm"
               poster="/media/demo-loop-poster.webp"
@@ -88,7 +146,7 @@
               width="640" height="360"
               disablepictureinpicture
               aria-hidden="true"></video>
-          </div>
+          </a>
           <div class="project-content">
             <p class="project-subtitle">Full-stack YouTube downloader</p>
             <p class="project-desc">Fetches any YouTube URL up to 4K, merging separate video/audio streams with ffmpeg. Live progress tracking, per-IP rate limiting, and sandboxed process spawning for safety.</p>
@@ -106,7 +164,7 @@
             <h3>Livet AI Demo</h3>
             <span class="status status--open">open source</span>
           </div>
-          <div class="project-media project-media--glyph hue-c" data-media aria-hidden="true"><span>🎟️</span></div>
+          <a class="project-media project-media--glyph hue-c" href="https://github.com/chrisorozco305/livet-ai-demo" target="_blank" rel="noopener" data-media aria-label="View Livet AI Demo source on GitHub"><span aria-hidden="true">🎟️</span></a>
           <div class="project-content">
             <p class="project-subtitle">Personalized events recommender</p>
             <p class="project-desc">Ranks a city feed with a weighted scoring model — distance, price, and taste fit — and explains each pick in plain language. Runs client-side or via a server scoring API.</p>
@@ -124,7 +182,7 @@
             <h3>YouTube Ad Blocker</h3>
             <span class="status status--open">open source</span>
           </div>
-          <div class="project-media project-media--glyph hue-d" data-media aria-hidden="true"><span>🛡️</span></div>
+          <a class="project-media project-media--glyph hue-d" href="https://github.com/chrisorozco305/youtube-ad-blocker" target="_blank" rel="noopener" data-media aria-label="View YouTube Ad Blocker source on GitHub"><span aria-hidden="true">🛡️</span></a>
           <div class="project-content">
             <p class="project-subtitle">Chrome extension</p>
             <p class="project-desc">Strips ads from YouTube using Manifest V3 declarative net-request rules, with content and background scripts and a simple popup toggle.</p>
@@ -142,7 +200,7 @@
             <h3>Cyberpunk Archive</h3>
             <span class="status status--open">open source</span>
           </div>
-          <div class="project-media project-media--glyph hue-e" data-media aria-hidden="true"><span>🌆</span></div>
+          <a class="project-media project-media--glyph hue-e" href="https://github.com/chrisorozco305/cyberpunk-archive" target="_blank" rel="noopener" data-media aria-label="View Cyberpunk Archive source on GitHub"><span aria-hidden="true">🌆</span></a>
           <div class="project-content">
             <p class="project-subtitle">Neon digital museum</p>
             <p class="project-desc">A nine-page single-page app with a filterable gallery, a full audio player, theming, and localStorage persistence — pure vanilla JS with zero dependencies or build tools.</p>

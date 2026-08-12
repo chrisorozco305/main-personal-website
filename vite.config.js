@@ -41,9 +41,14 @@ function blogPlugin() {
     transformIndexHtml(html) {
       return includePartials(html)
         .replace("<!--#latest-post-->", latestPostTeaser(root))
-        // Same tokens scripts/blog.mjs fills with "blog"/"/blog/" on generated pages.
+        // Same tokens scripts/blog.mjs fills with blog-specific values on
+        // generated pages.
         .replace(/\{\{navLabel\}\}/g, "projects")
-        .replace(/\{\{navHref\}\}/g, "/");
+        .replace(/\{\{navHref\}\}/g, "/")
+        .replace(
+          /\{\{footerTagline\}\}/g,
+          "B.A. Computer Science, 5+ years of engineering experience"
+        );
     },
   };
 }

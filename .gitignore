@@ -13,3 +13,7 @@ dist/
 # 4K master for the hero backdrop (~97MB — over GitHub's file limit). The
 # web-sized encode lives at public/media/background.mp4 and is committed.
 /background.mp4
+
+# Raw media masters (screen recordings, GIF exports). These get converted to
+# web-sized encodes in public/media/ — ship those, not the multi-MB sources.
+/assets/
