@@ -456,6 +456,17 @@ a:hover {
   color: rgba(243, 236, 255, 0.92);
 }
 
+/* A card can carry more than one badge — a role alongside a licence. The pair
+   needs a wrapper because .project-termbar is space-between: a third direct
+   child would push the badges to opposite ends of the bar instead of keeping
+   them together against the title. */
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
 .status {
   font-size: 0.66rem;
   font-weight: 600;
@@ -510,6 +521,16 @@ a:hover {
   color: var(--gold);
   background: rgba(255, 210, 63, 0.12);
   border-color: rgba(255, 210, 63, 0.45);
+}
+
+/* Role rather than licence or award. Cyan is the one brand hue no licence tier
+   claims, so a role never reads as a mis-set status. Same values as the unused
+   .status--community; kept separate because the two mean different things and
+   would drift apart, not because they need to differ today. */
+.status--role {
+  color: var(--accent-2);
+  background: rgba(46, 230, 255, 0.08);
+  border-color: rgba(46, 230, 255, 0.32);
 }
 
 /* The media band is an <a> wrapping the whole thumbnail, so it needs an
