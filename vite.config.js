@@ -47,7 +47,7 @@ function blogPlugin() {
         .replace(/\{\{navHref\}\}/g, "/")
         .replace(
           /\{\{footerTagline\}\}/g,
-          "B.A. Computer Science, 5+ years of engineering experience"
+          "B.A. Computer Science, 2+ years of game development experience"
         );
     },
   };
