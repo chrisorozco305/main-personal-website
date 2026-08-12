@@ -13,6 +13,22 @@
 
   <main id="top" class="page">
 
+    <!--
+      Hero backdrop video. Lives inside <main> so it starts below the header
+      rather than behind it, and breaks out to full width from the padded
+      content column. Uses the same data-media / data-src contract as the
+      project cards, so js/media.js loads it only once it's on screen, pauses
+      it when scrolled past, and skips it entirely under prefers-reduced-motion
+      or Save-Data (the poster frame stands in).
+    -->
+    <div class="hero-bg" data-media aria-hidden="true">
+      <video
+        data-src="/media/background.mp4"
+        poster="/media/background-poster.webp"
+        muted loop playsinline preload="none"
+        disablepictureinpicture></video>
+    </div>
+
     <!-- ============ INTRO ============ -->
     <section class="intro reveal">
       <h1 class="intro-heading">Christian Orozco <span class="intro-sep">|</span> Software Engineer</h1>
@@ -150,6 +166,7 @@
   <script type="module" src="/js/reveal.js"></script>
   <script type="module" src="/js/media.js"></script>
   <script type="module" src="/js/contact.js"></script>
+  <script type="module" src="/js/header.js"></script>
 
 </body>
 </html>

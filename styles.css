@@ -55,11 +55,45 @@ a:hover {
   text-underline-offset: 3px;
 }
 
+/* Hero backdrop video — anchored to the top of <main> so it begins below the
+   header instead of bleeding through it, then breaks out of the padded content
+   column to span the full viewport width. z-index:-1 keeps it behind every
+   sibling without needing a stacking rule on each one; .page's own z-index
+   confines it, so it still paints above the body background. The mask fades it
+   out before the project grid starts rather than ending on a hard edge. */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  height: clamp(560px, 78vh, 900px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero-bg video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Framed above center: cover has to crop ~117px vertically at typical
+     viewport sizes, and centering that crop cuts through the sun. */
+  object-position: center 40%;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 40%, transparent 100%);
+}
+
 .page {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
+  /* Lifts all page content above .hero-bg, which is positioned at z-index 0
+     and would otherwise paint over static content that follows it. */
+  z-index: 1;
 }
 
 .skip-link {
@@ -79,14 +113,22 @@ a:hover {
 }
 
 /* ============ Header ============ */
+/* Solid at rest so the hero video never shows through it at the top of the
+   page; the translucent blur only kicks in once content scrolls underneath
+   (.scrolled is toggled by js/header.js). */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(12, 6, 32, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(12, 6, 32, 0.82);
-  border-bottom: 1px solid var(--border);
 }
 
 .header-inner {
@@ -799,6 +841,23 @@ a:hover {
 .site-footer .intro-contact,
 .site-footer .intro-contact:first-of-type {
   margin-top: 0;
+}
+
+/* Footer contact lines invert the hero: pink labels, white values, and both
+   held constant through hover/focus so only the underline reacts. The :hover
+   selectors are listed explicitly to outrank `.footer-inner a:hover` and
+   `.intro-contact a:hover`, which otherwise tie on specificity. */
+.site-footer .intro-contact a,
+.site-footer .intro-contact-btn,
+.site-footer .intro-contact a:hover,
+.site-footer .intro-contact a:focus-visible,
+.site-footer .intro-contact-btn:hover,
+.site-footer .intro-contact-btn:focus-visible {
+  color: var(--accent);
+}
+
+.site-footer .intro-contact strong {
+  color: var(--text);
 }
 
 .to-top {
