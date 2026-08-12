@@ -2,10 +2,11 @@
 
   <header class="site-header">
     <div class="header-inner">
-      <a class="logo" href="/">
-        <span class="logo-mark">co</span><span class="logo-dot">.</span>
-        <span class="logo-sub">Christian Orozco // Software Engineer</span>
-      </a>
+      <!-- {{navLabel}}/{{navHref}} are filled per page: "projects"/"/" on the
+           homepage (vite.config.js), "blog"/"/blog/" on generated blog pages
+           (scripts/blog.mjs) — so the blog logo returns to the blog index,
+           not the homepage. -->
+      <a class="logo" href="{{navHref}}">chris's {{navLabel}}</a>
       <nav aria-label="Primary">
         <a href="/">Projects</a>
         <a href="/blog/">Blog</a>

@@ -39,8 +39,11 @@ function blogPlugin() {
       });
     },
     transformIndexHtml(html) {
-      const withPartials = includePartials(html);
-      return withPartials.replace("<!--#latest-post-->", latestPostTeaser(root));
+      return includePartials(html)
+        .replace("<!--#latest-post-->", latestPostTeaser(root))
+        // Same tokens scripts/blog.mjs fills with "blog"/"/blog/" on generated pages.
+        .replace(/\{\{navLabel\}\}/g, "projects")
+        .replace(/\{\{navHref\}\}/g, "/");
     },
   };
 }

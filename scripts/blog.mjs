@@ -147,10 +147,16 @@ export function generate(root) {
 
   clean(root);
 
-  const write = (relPath, html) => {
+  // Partials are inlined *before* tokens are filled, so placeholders that live
+  // inside a partial ({{navLabel}} in header.html) get substituted too. Values
+  // are injected via String.replace callbacks and never rescanned, so post
+  // bodies containing {{...}} pass through untouched.
+  const page = applyIncludes(layout, root);
+
+  const write = (relPath, vars) => {
     const full = path.join(root, relPath);
     fs.mkdirSync(path.dirname(full), { recursive: true });
-    fs.writeFileSync(full, applyIncludes(html, root), "utf8");
+    fs.writeFileSync(full, fill(page, vars), "utf8");
     written.push(full);
   };
 
@@ -159,29 +165,28 @@ export function generate(root) {
     ? `<ul class="post-list">\n${posts.map(postRow).join("\n")}\n      </ul>`
     : `<p class="empty">No posts yet — drop a markdown file in <code>blog/posts/</code>.</p>`;
 
-  write(
-    "blog/index.html",
-    fill(layout, {
-      title: "Blog — Christian Orozco",
-      description: "Writing on software, side projects, and things worth building.",
-      bodyClass: "page-blog",
-      content: `    <section class="blog-index">
+  write("blog/index.html", {
+    title: "Blog — Christian Orozco",
+    description: "Writing on software, side projects, and things worth building.",
+    bodyClass: "page-blog",
+    navLabel: "blog",
+    navHref: "/blog/",
+    content: `    <section class="blog-index">
       ${rows}
     </section>`,
-    })
-  );
+  });
 
   // ---- one page per post ----
   for (const post of posts) {
     // post.url is already "/blog/<date>/<slug>/" — strip the leading slash
     // rather than prefixing "blog" again (that produced blog/blog/... nesting).
-    write(
-      `${post.url.slice(1)}index.html`,
-      fill(layout, {
-        title: `${post.title} — Christian Orozco`,
-        description: post.excerpt,
-        bodyClass: "page-post",
-        content: `    <article class="post">
+    write(`${post.url.slice(1)}index.html`, {
+      title: `${post.title} — Christian Orozco`,
+      description: post.excerpt,
+      bodyClass: "page-post",
+      navLabel: "blog",
+    navHref: "/blog/",
+      content: `    <article class="post">
       <header class="post-header">
         <a class="back-link" href="/blog/">← All posts</a>
         <h1>${escapeHtml(post.title)}</h1>
@@ -192,8 +197,7 @@ export function generate(root) {
 ${post.body}
       </div>
     </article>`,
-      })
-    );
+    });
   }
 
   return { posts, pages: written.filter((f) => f.endsWith(".html")) };

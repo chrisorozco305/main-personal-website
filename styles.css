@@ -142,28 +142,14 @@ a:hover {
 }
 
 .logo {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
   font-family: var(--font);
   font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--text);
-}
-
-.logo-dot {
+  font-size: 1rem;
   color: var(--accent);
 }
 
-.logo-sub {
-  display: none;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-@media (min-width: 640px) {
-  .logo-sub { display: inline; }
+.logo:hover {
+  text-decoration: none;
 }
 
 .site-header nav {
@@ -190,10 +176,26 @@ a:hover {
 
 /* ============ Intro ============ */
 .intro {
-  padding: 4.5rem 0 4rem;
+  padding: 4.5rem 0 2rem;
   text-align: center;
   position: relative;
   z-index: 1;
+  /* Stacked shadows keep the hero legible over the video without a dimming
+     panel behind it: tight halos define the letter edges, then progressively
+     wider layers pool darkness around the whole text block. Overlapping
+     shadows compound, so the near-black wide layers do most of the work.
+     text-shadow inherits, so every child picks this up. */
+  text-shadow:
+    0 0 6px #000,
+    0 0 14px #000,
+    0 3px 16px #000,
+    0 0 40px rgba(0, 0, 0, 0.95),
+    0 0 90px rgba(0, 0, 0, 0.9);
+}
+
+/* The toast sits on its own solid panel, so it doesn't need the halo. */
+.copy-toast {
+  text-shadow: none;
 }
 
 .intro-heading {
@@ -357,7 +359,7 @@ a:hover {
   border: 1px solid var(--border);
   background: var(--surface);
   padding: 1.1rem 1.3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   transition: border-color 0.15s ease;
 }
 
@@ -538,6 +540,20 @@ a:hover {
   line-height: 1.6;
 }
 
+/* Inline citations inside a description read as references, not actions, so
+   they take the cyan "data" accent rather than the pink used for buttons, and
+   stay underlined at rest to be findable inside a block of text. */
+.project-desc a {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-decoration-color: rgba(46, 230, 255, 0.4);
+  text-underline-offset: 2px;
+}
+
+.project-desc a:hover {
+  text-decoration-color: var(--accent-2);
+}
+
 .tags {
   list-style: none;
   display: flex;
@@ -570,6 +586,9 @@ a:hover {
 .tag-html     { color: #e34f26; background: rgba(227, 79, 38, 0.08);   border-color: rgba(227, 79, 38, 0.32); }
 .tag-css      { color: #1e90d8; background: rgba(30, 144, 216, 0.08);  border-color: rgba(30, 144, 216, 0.32); }
 .tag-chrome   { color: #34a853; background: rgba(52, 168, 83, 0.08);   border-color: rgba(52, 168, 83, 0.32); }
+.tag-postgres { color: #4d9fd6; background: rgba(77, 159, 214, 0.08);  border-color: rgba(77, 159, 214, 0.32); }
+.tag-prisma   { color: #2ec4a6; background: rgba(46, 196, 166, 0.08);  border-color: rgba(46, 196, 166, 0.32); }
+.tag-vercel   { color: #f4f4f5; background: rgba(244, 244, 245, 0.06); border-color: rgba(244, 244, 245, 0.28); }
 
 .project-links {
   display: flex;
