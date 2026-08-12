@@ -51,6 +51,24 @@ function autoExcerpt(markdown, limit = 180) {
   return text.length > limit ? `${text.slice(0, limit).trimEnd()}…` : text;
 }
 
+/** The post's own body, flattened to one plain-text run for the index preview —
+ *  paragraphs join together rather than stopping at the first one, so a row
+ *  shows the actual opening of the writing instead of a summary of it.
+ *  260 characters including the ellipsis, cut wherever it lands rather than at a
+ *  word boundary, matching the reference. */
+function bodyPreview(markdown, limit = 259) {
+  const text = markdown
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/^#.*$/gm, " ")
+    .replace(/^\s*(?:[-*+]|\d+\.)\s+/gm, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[*_`>#]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return text.length > limit ? `${text.slice(0, limit)}…` : text;
+}
+
 export function readPosts(root) {
   const dir = path.join(root, POSTS_DIR);
   if (!fs.existsSync(dir)) return [];
@@ -69,7 +87,10 @@ export function readPosts(root) {
         date,
         slug,
         tags: Array.isArray(data.tags) ? data.tags : [],
+        // excerpt is the authored summary — it feeds <meta name="description">
+        // and the homepage teaser. preview is the body itself, for index rows.
         excerpt: data.excerpt || autoExcerpt(content),
+        preview: bodyPreview(content),
         body: marked.parse(content),
         url: `/blog/${date}/${slug}/`,
       };
@@ -93,21 +114,30 @@ function fill(template, vars) {
   );
 }
 
-function tagList(tags) {
-  if (!tags.length) return "";
-  return `<ul class="tags">${tags.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>`;
+/** Archive links at the foot of a post: older on the left, newer on the right.
+ *  Either side is absent at the ends of the archive — CSS keeps the survivor on
+ *  its own edge, so no placeholder element is needed to hold the gap. */
+function postNav(older, newer) {
+  if (!older && !newer) return "";
+  const prev = older
+    ? `        <a class="post-nav-link post-nav-prev" href="${older.url}" rel="prev">← ${escapeHtml(older.title)}</a>\n`
+    : "";
+  const next = newer
+    ? `        <a class="post-nav-link post-nav-next" href="${newer.url}" rel="next">${escapeHtml(newer.title)} →</a>\n`
+    : "";
+  return `      <nav class="post-nav" aria-label="More posts">\n${prev}${next}      </nav>`;
 }
 
-/** One row of the blog index: stacked title / date / excerpt. Tags stay in
- *  frontmatter and still render on the post page itself — the index is meant
- *  to scan quickly, so it carries only those three lines. */
+/** One row of the blog index: stacked title / date / body preview. Tags are parsed
+ *  from frontmatter but no longer rendered anywhere — neither the index nor the
+ *  post page shows them, so both read as title / date / prose. */
 export function postRow(post) {
   return `        <li class="post-row reveal">
           <a class="post-link" href="${post.url}">
             <h3 class="post-title">${escapeHtml(post.title)}</h3>
           </a>
           <time class="post-date" datetime="${post.date}">${post.date}</time>
-          <p class="post-excerpt">${escapeHtml(post.excerpt)}</p>
+          <p class="post-excerpt">${escapeHtml(post.preview)}</p>
         </li>`;
 }
 
@@ -179,7 +209,11 @@ export function generate(root) {
   });
 
   // ---- one page per post ----
-  for (const post of posts) {
+  // posts is sorted newest-first, so the entry *after* this one in the array is
+  // the older post and the entry before it is the newer one.
+  for (const [i, post] of posts.entries()) {
+    const older = posts[i + 1];
+    const newer = posts[i - 1];
     // post.url is already "/blog/<date>/<slug>/" — strip the leading slash
     // rather than prefixing "blog" again (that produced blog/blog/... nesting).
     write(`${post.url.slice(1)}index.html`, {
@@ -191,14 +225,14 @@ export function generate(root) {
     footerTagline: "Software Engineer | Game Developer",
       content: `    <article class="post">
       <header class="post-header">
-        <a class="back-link" href="/blog/">← All posts</a>
+        <a class="back-link" href="/blog/">← Back to blog</a>
         <h1>${escapeHtml(post.title)}</h1>
         <time class="post-date" datetime="${post.date}">${post.date}</time>
-        ${tagList(post.tags)}
       </header>
       <div class="prose">
 ${post.body}
       </div>
+${postNav(older, newer)}
     </article>`,
     });
   }

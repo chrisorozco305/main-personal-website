@@ -503,6 +503,15 @@ a:hover {
   border-color: rgba(255, 122, 92, 0.32);
 }
 
+/* The one badge in the grid that isn't a licence — this slot carries an award
+   instead. Gold like .status--closed, but a step stronger in fill and border so
+   a prize reads as louder than a status, not merely as another licence tier. */
+.status--award {
+  color: var(--gold);
+  background: rgba(255, 210, 63, 0.12);
+  border-color: rgba(255, 210, 63, 0.45);
+}
+
 /* The media band is an <a> wrapping the whole thumbnail, so it needs an
    explicit display (anchors are inline) and no underline on hover. The inner
    media dims slightly on hover as the affordance that it's clickable. */
@@ -697,7 +706,7 @@ a:hover {
 
 /* ============ Blog index ============ */
 .blog-index {
-  padding: 2rem 0 5rem;
+  padding: 2rem 0 2.5rem;
   position: relative;
   z-index: 1;
 }
@@ -729,8 +738,11 @@ a:hover {
   display: block;
 }
 
+/* 1.05rem/1rem match the reference's measured 16.8px title and 16px excerpt. The
+   column is already the same 928px, so the type scale was the only thing making
+   this list read as a thin strip stretched across a wide space. */
 .post-title {
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--text);
   transition: color 0.15s ease;
@@ -747,13 +759,13 @@ a:hover {
   margin: 0.2rem 0 0.35rem;
 }
 
-/* Same tightened leading as the homepage teaser — the 1.65 body default is
-   for long-form reading and pulls a short excerpt apart. Width comes from
-   .post-list so text and rules stay flush. */
+/* 16px/25.6px, the reference's excerpt metrics — slightly tighter than the 1.65
+   body default, which is tuned for long-form and pulls a two-line excerpt apart.
+   Width comes from .post-list so text and rules stay flush. */
 .post-excerpt {
   color: var(--text-soft);
-  font-size: 0.86rem;
-  line-height: 1.45;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .empty {
@@ -769,8 +781,16 @@ a:hover {
 }
 
 /* ============ Blog post ============ */
+/* One centered column for the whole article — header, body, and nav rule all
+   share it, the way the reference's main.blog-post does (max-width 1024 with
+   48px side padding, i.e. a 928px measure). 58rem is that same 928px and the
+   same value .post-list uses, so a post lines up with the blog index it came
+   from. Bottom padding matches .footer-inner's padding-top so the nav sits the
+   same distance above the footer rule as the footer text sits below it. */
 .post {
-  padding: 3.5rem 0 5rem;
+  max-width: 58rem;
+  margin: 0 auto;
+  padding: 3.5rem 0 1.75rem;
   position: relative;
   z-index: 1;
 }
@@ -787,6 +807,14 @@ a:hover {
   color: var(--accent-2);
 }
 
+/* Rule closing the header, matching the one above the post nav at the other end
+   of the article — the title block and the body read as two separate zones. The
+   border also stops .post-date's bottom margin collapsing out of the header, so
+   that margin becomes the gap between the date and the rule. */
+.post-header {
+  border-bottom: 1px solid var(--border);
+}
+
 .post-header h1 {
   font-size: clamp(1.4rem, 4vw, 1.9rem);
   font-weight: 700;
@@ -795,16 +823,54 @@ a:hover {
 
 .post-header .post-date {
   display: block;
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
 }
 
-.post-header .tags {
-  margin-bottom: 1.6rem;
+/* Archive links at the foot of a post. Spans the .post column, so its rule lines
+   up with the footer rule directly below it and two long titles fit side by side. */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
 }
 
+.post-nav-link {
+  max-width: 45%;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
+}
+
+.post-nav-link:hover {
+  color: var(--accent-2);
+}
+
+/* margin-left keeps the newer-post link on the right edge even when it is the
+   only child — space-between would otherwise center a lone link. */
+.post-nav-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* A post with no neighbours renders no .post-nav, which leaves .prose ending the
+   article — restore the space the nav would have occupied so the body text is
+   never crowded against the footer rule. */
+.prose:last-child {
+  padding-bottom: 3.25rem;
+}
+
+/* No measure of its own: body text fills .post's 928px column, matching the
+   reference, where the paragraphs run the full width of the same column that
+   holds the title and the rules. Leading is looser than the 1.65 body default
+   to carry the longer line — the reference runs 16px/28px for the same reason. */
 .prose {
-  max-width: 68ch;
+  margin-top: 1.6rem;
   font-size: 1.02rem;
+  line-height: 1.75;
   color: var(--text);
 }
 
@@ -930,8 +996,11 @@ a:hover {
   max-width: 58rem;
 }
 
+/* Post pages share the blog index's 58rem column (see .post), so the footer rule
+   lands on the same edges as the article above it. The old 68ch value was also
+   too narrow to hold the footer row, which needs 863px, on a single line. */
 .page-post .footer-inner {
-  max-width: 68ch;
+  max-width: 58rem;
 }
 
 .footer-row {

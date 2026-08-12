@@ -32,8 +32,8 @@
     <!-- ============ INTRO ============ -->
     <section class="intro reveal">
       <h1 class="intro-heading">Software Engineer <span class="intro-sep">|</span> Game Developer</h1>
-      <p class="intro-bio">I'm a computer science graduate from FIU, based in Miami, with 5+ years of engineering experience. I work mostly in web and game development, and most of what I build starts as something I wanted to make for fun.</p>
-      <p class="intro-cta">Interested in Web or Game Development? Let's talk.</p>
+      <p class="intro-bio">I'm a computer science graduate from FIU, based in Miami, with 5+ years of engineering experience. I work mostly in swe and game development, and most of what I build starts as something I wanted to make for fun.</p>
+      <p class="intro-cta">Interested in SWE or Game Development? Let's talk.</p>
       <p class="intro-contact">
         <a href="https://github.com/chrisorozco305" target="_blank" rel="noopener">github: <strong>@chrisorozco305</strong></a>
       </p>
@@ -135,80 +135,53 @@
 
         <li class="project reveal">
           <div class="project-termbar">
-            <h3>YouTube Downloader</h3>
+            <h3>Cyberpunk Archive</h3>
             <span class="status status--open">open source</span>
           </div>
-          <a class="project-media" href="https://github.com/chrisorozco305/youtube-downloader" target="_blank" rel="noopener" data-media aria-label="View YouTube Downloader source on GitHub">
+          <a class="project-media" href="https://github.com/chrisorozco305/cyberpunk-archive/tree/main" target="_blank" rel="noopener" data-media aria-label="View Cyberpunk Archive source on GitHub">
             <video
-              data-src="/media/demo-loop.webm"
-              poster="/media/demo-loop-poster.webp"
+              data-src="/media/cyberpunk-archive.webm"
+              poster="/media/cyberpunk-archive-poster.webp"
               muted loop playsinline preload="none"
-              width="640" height="360"
+              width="800" height="450"
               disablepictureinpicture
               aria-hidden="true"></video>
           </a>
           <div class="project-content">
-            <p class="project-subtitle">Full-stack YouTube downloader</p>
-            <p class="project-desc">Fetches any YouTube URL up to 4K, merging separate video/audio streams with ffmpeg. Live progress tracking, per-IP rate limiting, and sandboxed process spawning for safety.</p>
+            <p class="project-subtitle">A fictional archive on a real backend</p>
+            <p class="project-desc">Ten pages of neon-terminal interface — gallery, audio player, video library, blog, settings — built as vanilla HTML, CSS, and JavaScript over a small Express API. The governing constraint is that it has to work both ways: every data-backed view requests its endpoint first and falls back to a hardcoded array on any failure, so index.html opened straight off disk with no Node installed is still a working site, and the same code fills with real data when the server is up. Images are seeded from <a href="https://unsplash.com/developers" target="_blank" rel="noopener">Unsplash</a> into <a href="https://www.sqlite.org/" target="_blank" rel="noopener">SQLite</a> through Node's built-in <a href="https://nodejs.org/api/sqlite.html" target="_blank" rel="noopener">node:sqlite</a> — three dependencies total, no native compilation, no build step in either mode. Audio and video run on the <a href="https://developers.google.com/youtube/iframe_api_reference" target="_blank" rel="noopener">YouTube IFrame API</a>, with a single iframe moved between the main and mini player so playback survives navigation. The archive's contents are invented; the infrastructure under them isn't.</p>
             <ul class="tags">
-              <li class="tag-express">Express</li><li class="tag-react">React</li><li class="tag-ytdlp">yt-dlp</li><li class="tag-ffmpeg">ffmpeg</li>
+              <li class="tag-js">javascript</li><li class="tag-html">html</li><li class="tag-css">css</li><li class="tag-express">express</li><li>sqlite</li><li>node</li><li>unsplash</li><li>youtube-api</li>
             </ul>
             <div class="project-links">
-              <a class="gh-button" href="https://github.com/chrisorozco305/youtube-downloader" target="_blank" rel="noopener">View Source on GitHub</a>
+              <a class="gh-button" href="https://github.com/chrisorozco305/cyberpunk-archive/tree/main" target="_blank" rel="noopener">View Source on GitHub</a>
             </div>
           </div>
         </li>
 
         <li class="project reveal">
           <div class="project-termbar">
-            <h3>Livet AI Demo</h3>
-            <span class="status status--open">open source</span>
+            <h3>Meta Museum</h3>
+            <span class="status status--award">1st place — MIT Reality Hack</span>
           </div>
-          <a class="project-media project-media--glyph hue-c" href="https://github.com/chrisorozco305/livet-ai-demo" target="_blank" rel="noopener" data-media aria-label="View Livet AI Demo source on GitHub"><span aria-hidden="true">🎟️</span></a>
+          <a class="project-media" href="https://horizon.meta.com/world/10162550942943464" target="_blank" rel="noopener" data-media aria-label="Visit Meta Museum in Horizon Worlds">
+            <video
+              data-src="/media/meta-museum.webm"
+              poster="/media/meta-museum-poster.webp"
+              muted loop playsinline preload="none"
+              width="800" height="450"
+              disablepictureinpicture
+              aria-hidden="true"></video>
+          </a>
           <div class="project-content">
-            <p class="project-subtitle">Personalized events recommender</p>
-            <p class="project-desc">Ranks a city feed with a weighted scoring model — distance, price, and taste fit — and explains each pick in plain language. Runs client-side or via a server scoring API.</p>
+            <p class="project-subtitle">A multiplayer art museum in Meta Horizon Worlds</p>
+            <p class="project-desc">A social VR museum built over a weekend at <a href="https://www.realityhackatmit.com/2025-tracks-prizes" target="_blank" rel="noopener">MIT Reality Hack 2025</a>, where it won <a href="https://www.realityhackatmit.com/2025-tracks-prizes" target="_blank" rel="noopener">Best Lifestyle World</a> — a track judged and presented by Meta. Visitors walk a gallery of classical and abstract sculpture, including a scanned model of the MIT Museum itself, with exhibits animated by configurable rotation and sinusoidal-oscillation components rather than baked animation. The scripting concentrates on presence rather than mechanics: every visitor gets a floating name label built as a <a href="https://developers.meta.com/horizon-worlds/learn/documentation/desktop-editor/custom-ui/" target="_blank" rel="noopener">Horizon UI</a> panel and attached to their torso, with ownership handed between the server player and the local player as people enter and leave the world. Two leaderboards persist visit count and cumulative time in world through <a href="https://developers.meta.com/horizon-worlds/learn/documentation/typescript/getting-started/persistent-variables-v2/" target="_blank" rel="noopener">Player Persistent Variables</a>, and a welcome popup detects whether someone arrived in a headset or on a screen and greets them accordingly.</p>
             <ul class="tags">
-              <li class="tag-nextjs">Next.js</li><li class="tag-ts">TypeScript</li><li>Recommender</li>
+              <li class="tag-ts">typescript</li><li>meta-horizon-worlds</li><li>horizon-ui</li><li>vr</li><li>fbx</li>
             </ul>
             <div class="project-links">
-              <a class="gh-button" href="https://github.com/chrisorozco305/livet-ai-demo" target="_blank" rel="noopener">View Source on GitHub</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="project reveal">
-          <div class="project-termbar">
-            <h3>YouTube Ad Blocker</h3>
-            <span class="status status--open">open source</span>
-          </div>
-          <a class="project-media project-media--glyph hue-d" href="https://github.com/chrisorozco305/youtube-ad-blocker" target="_blank" rel="noopener" data-media aria-label="View YouTube Ad Blocker source on GitHub"><span aria-hidden="true">🛡️</span></a>
-          <div class="project-content">
-            <p class="project-subtitle">Chrome extension</p>
-            <p class="project-desc">Strips ads from YouTube using Manifest V3 declarative net-request rules, with content and background scripts and a simple popup toggle.</p>
-            <ul class="tags">
-              <li class="tag-js">JavaScript</li><li class="tag-chrome">Chrome Extension</li><li>Manifest V3</li>
-            </ul>
-            <div class="project-links">
-              <a class="gh-button" href="https://github.com/chrisorozco305/youtube-ad-blocker" target="_blank" rel="noopener">View Source on GitHub</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="project reveal">
-          <div class="project-termbar">
-            <h3>Cyberpunk Archive</h3>
-            <span class="status status--open">open source</span>
-          </div>
-          <a class="project-media project-media--glyph hue-e" href="https://github.com/chrisorozco305/cyberpunk-archive" target="_blank" rel="noopener" data-media aria-label="View Cyberpunk Archive source on GitHub"><span aria-hidden="true">🌆</span></a>
-          <div class="project-content">
-            <p class="project-subtitle">Neon digital museum</p>
-            <p class="project-desc">A nine-page single-page app with a filterable gallery, a full audio player, theming, and localStorage persistence — pure vanilla JS with zero dependencies or build tools.</p>
-            <ul class="tags">
-              <li class="tag-js">Vanilla JS</li><li class="tag-html">HTML</li><li class="tag-css">CSS</li>
-            </ul>
-            <div class="project-links">
-              <a class="gh-button" href="https://github.com/chrisorozco305/cyberpunk-archive" target="_blank" rel="noopener">View Source on GitHub</a>
+              <a class="gh-button" href="https://horizon.meta.com/world/10162550942943464" target="_blank" rel="noopener">Visit World</a>
+              <a class="gh-button gh-button--secondary" href="https://www.youtube.com/watch?v=9qoYrLjD9pk" target="_blank" rel="noopener">Video</a>
             </div>
           </div>
         </li>
