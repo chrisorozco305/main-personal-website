@@ -2,28 +2,33 @@
 title: "Vocation is finished (for now)"
 date: "2026-08-11"
 tags: ["vocation", "ai"]
+excerpt: "Vocation 2.0 is done — built solo in a month using subagents, with one rule that governed most of the work: measured and estimated numbers never blur together."
 ---
 
-Finally done with Vocation, I learned a lot about web development. As much
-as people hate AI, the difference between handwriting code and vibe coding
-is a very large gap. Vocation 2.0 took me a month using subagents. Had I
-tried to handwrite everything and debug on my own, this project would've
-taken several months. Even then, the project isn't even close to finishing,
-there's so much more I can add to it but I've just lost interest in the
-project altogether.
+Vocation 2.0 is done. I built it solo in about a month, and using subagents
+is the reason it was a month and not six — but that buys you time, it
+doesn't make the decisions for you. The rule I set early was that measured
+and estimated numbers never blur together: a wage from a federal survey
+carries its year and its source, a model's judgement gets labelled as one,
+and a school I hold no data for gets no number at all rather than a guess
+standing in for one. Holding that line is where most of the month actually
+went.
 
-UI design using AI is by far the most difficult to work with. I'm using
-Claude with Impeccable and Google Stitch, maybe it's a skill issue but the
-designs still come out with that AI look. The best way to combat this is to
-literally step by step change one part of the UI on each page, that alone
-takes a while.
+I'm stopping here on purpose. There's plenty I could still add, but it
+works end to end and does what I set out to do, and I'd rather ship at that
+line than keep it open forever.
 
-Claude (or AI in general) is great for scraping data, though it does have
-its limitations. Collecting data was another part of the project that took
-a long time, just to scrape the catalog of every Florida school took an
-entire weekend to finish.
+UI is where AI is still weakest. I ran Claude with Impeccable and Google
+Stitch, and the output still lands on that generic AI look no matter how
+you prompt it. What works is going page by page and changing one element
+at a time — slow, but it's the only thing that produced a design I'd
+defend.
 
-This is a project I'm proud of, but man, before AI, creating end-to-end
-software by yourself sounds impossible - or at least would take years.
+Data collection was the other slow part. AI is good at scraping and bad at
+knowing when it's wrong, so everything needs checking. Pulling the course
+catalog for every school in Florida took an entire weekend.
+
+I'm proud of this one. Building something end to end on your own used to
+mean years. It doesn't anymore — but the judgement calls are still yours.
 
 \-Chris
