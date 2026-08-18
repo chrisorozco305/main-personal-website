@@ -2,7 +2,7 @@
 title: "Vocation is finished (for now)"
 date: "2026-08-11"
 tags: ["vocation", "ai"]
-excerpt: "Vocation 2.0 is done — built solo in a month using subagents, with one rule that governed most of the work: measured and estimated numbers never blur together."
+excerpt: "Vocation 2.0 is done. It took a while to build but Claude definitely made the development process much faster. Making this project was fun and I learned a lot using Claude and ECC."
 ---
 
 Vocation 2.0 is done. It took a while to build but Claude definitely made the development process much faster. Making this project was fun and I learned a lot using Claude and ECC.
