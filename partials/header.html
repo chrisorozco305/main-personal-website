@@ -2,14 +2,13 @@
 
   <header class="site-header">
     <div class="header-inner">
-      <!-- {{navLabel}}/{{navHref}} are filled per page: "projects"/"/" on the
-           homepage (vite.config.js), "blog"/"/blog/" on generated blog pages
-           (scripts/blog.mjs) — so the blog logo returns to the blog index,
-           not the homepage. -->
+      <!-- {{navLabel}}/{{navHref}} are resolved in vite.config.js. Only one
+           page type exists now, so this always fills to "projects"/"/". -->
       <a class="logo" href="{{navHref}}">chris's {{navLabel}}</a>
       <nav aria-label="Primary">
         <a href="/">Projects</a>
-        <a href="/blog/">Blog</a>
+        <a href="https://www.linkedin.com/in/christiandeangeloorozco/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/chr1sorozc0" target="_blank" rel="noopener">Twitter</a>
         <a href="https://github.com/chrisorozco305" target="_blank" rel="noopener">GitHub</a>
         <a class="nav-cta" href="https://www.youtube.com/@christianorozcofl/videos" target="_blank" rel="noopener">YouTube</a>
       </nav>

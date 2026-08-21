@@ -351,27 +351,19 @@ a:hover {
   margin-bottom: 1.5rem;
 }
 
-/* ============ Blog teaser (homepage) ============ */
-/* The sheen + resting shadow are what keep a flat-colored panel from reading
-   as a plain rectangle: a faint top-down highlight suggests a light source,
-   and the drop shadow lifts the card off the page. */
-.blog-teaser {
+/* ============ Featured video (homepage) ============ */
+/* Same panel treatment the old blog teaser used — sheen + resting shadow keep
+   a flat-colored panel from reading as a plain rectangle. */
+.video-feature {
   display: block;
   border: 1px solid var(--border);
   background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
-  padding: 1.1rem 1.3rem;
+  padding: 1.1rem 1.3rem 1.3rem;
   margin-bottom: 1.5rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.blog-teaser:hover {
-  border-color: rgba(255, 63, 216, 0.35);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-}
-
-.blog-teaser-kicker {
+.video-feature-kicker {
   display: block;
   font-size: 0.7rem;
   font-weight: 600;
@@ -381,33 +373,85 @@ a:hover {
   margin-bottom: 0.35rem;
 }
 
-.blog-teaser-title {
+.video-feature-title {
   color: var(--text);
   font-size: 1rem;
   font-weight: 600;
+  margin-bottom: 0.8rem;
 }
 
-.blog-teaser-date {
-  color: var(--text-muted);
-  font-size: 0.82rem;
-  margin-left: 0.5rem;
-}
-
-.blog-teaser-excerpt {
-  color: var(--text-soft);
-  font-size: 0.88rem;
-  margin-top: 0.35rem;
-  /* Tighter than the 1.65 body default — the excerpt is a short two-line
-     block, so generous leading just pulls the card apart. */
-  line-height: 1.45;
-}
-
-.blog-teaser-cta {
+/* 16:9 box holding the poster + play button until clicked, then the iframe
+   js/video.js swaps in — same element, same box, same border, so nothing
+   jumps when playback starts. */
+.video-feature-media {
   display: block;
-  text-align: right;
-  color: var(--accent);
-  font-size: 0.84rem;
-  margin-top: 0.4rem;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: 1px solid var(--border);
+  background: #08051a;
+  cursor: pointer;
+}
+
+.video-feature-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.15s ease;
+}
+
+.video-feature-media:hover img {
+  opacity: 0.82;
+}
+
+.video-feature-media:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* Triangle drawn from borders rather than a glyph, so it stays crisp at any
+   size and inherits the accent color the same way every other CTA does. */
+.video-feature-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3.4rem;
+  height: 3.4rem;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius);
+  background: rgba(12, 6, 32, 0.72);
+  border: 1px solid rgba(255, 63, 216, 0.45);
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.video-feature-play::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 0.6rem 0 0.6rem 1rem;
+  border-color: transparent transparent transparent var(--accent);
+}
+
+.video-feature-media:hover .video-feature-play {
+  background: rgba(255, 63, 216, 0.16);
+  border-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.video-feature-media--playing {
+  cursor: default;
+}
+
+.video-feature-media--playing iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* ============ Projects (3-column terminal card grid) ============ */
@@ -725,258 +769,6 @@ a:hover {
   .project-grid { grid-template-columns: 1fr; }
 }
 
-/* ============ Blog index ============ */
-.blog-index {
-  padding: 2rem 0 2.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-/* Centered column, matching the reference's 928px content width. One measure
-   governs both the text and the rules, so a divider never runs wider than the
-   excerpt it separates. */
-.post-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  max-width: 58rem;
-  margin: 0 auto;
-}
-
-/* Rule sits on border-top so a line appears above the first title, not just
-   between rows; the last row closes the list with a matching bottom rule. */
-.post-row {
-  padding: 1.05rem 0;
-}
-
-/* Divider only between rows — no line above the first or below the last,
-   which read as stray/floating rather than framing the list. */
-.post-row + .post-row {
-  border-top: 1px solid var(--border);
-}
-
-.post-link {
-  display: block;
-}
-
-/* 1.05rem/1rem match the reference's measured 16.8px title and 16px excerpt. The
-   column is already the same 928px, so the type scale was the only thing making
-   this list read as a thin strip stretched across a wide space. */
-.post-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text);
-  transition: color 0.15s ease;
-}
-
-.post-row:hover .post-title {
-  color: var(--accent);
-}
-
-.post-date {
-  display: block;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin: 0.2rem 0 0.35rem;
-}
-
-/* 16px/25.6px, the reference's excerpt metrics — slightly tighter than the 1.65
-   body default, which is tuned for long-form and pulls a two-line excerpt apart.
-   Width comes from .post-list so text and rules stay flush. */
-.post-excerpt {
-  color: var(--text-soft);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.empty {
-  color: var(--text-muted);
-  padding: 2rem 0;
-}
-
-.empty code {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.1rem 0.4rem;
-}
-
-/* ============ Blog post ============ */
-/* One centered column for the whole article — header, body, and nav rule all
-   share it, the way the reference's main.blog-post does (max-width 1024 with
-   48px side padding, i.e. a 928px measure). 58rem is that same 928px and the
-   same value .post-list uses, so a post lines up with the blog index it came
-   from. Bottom padding matches .footer-inner's padding-top so the nav sits the
-   same distance above the footer rule as the footer text sits below it. */
-.post {
-  max-width: 58rem;
-  margin: 0 auto;
-  padding: 3.5rem 0 1.75rem;
-  position: relative;
-  z-index: 1;
-}
-
-.back-link {
-  display: inline-block;
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  margin-bottom: 1.4rem;
-  transition: color 0.15s ease;
-}
-
-.back-link:hover {
-  color: var(--accent-2);
-}
-
-/* Rule closing the header, matching the one above the post nav at the other end
-   of the article — the title block and the body read as two separate zones. The
-   border also stops .post-date's bottom margin collapsing out of the header, so
-   that margin becomes the gap between the date and the rule. */
-.post-header {
-  border-bottom: 1px solid var(--border);
-}
-
-.post-header h1 {
-  font-size: clamp(1.4rem, 4vw, 1.9rem);
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-
-.post-header .post-date {
-  display: block;
-  margin-bottom: 1rem;
-}
-
-/* Archive links at the foot of a post. Spans the .post column, so its rule lines
-   up with the footer rule directly below it and two long titles fit side by side. */
-.post-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  margin-top: 3rem;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.88rem;
-}
-
-.post-nav-link {
-  max-width: 45%;
-  color: var(--text-muted);
-  transition: color 0.15s ease;
-}
-
-.post-nav-link:hover {
-  color: var(--accent-2);
-}
-
-/* margin-left keeps the newer-post link on the right edge even when it is the
-   only child — space-between would otherwise center a lone link. */
-.post-nav-next {
-  margin-left: auto;
-  text-align: right;
-}
-
-/* A post with no neighbours renders no .post-nav, which leaves .prose ending the
-   article — restore the space the nav would have occupied so the body text is
-   never crowded against the footer rule. */
-.prose:last-child {
-  padding-bottom: 3.25rem;
-}
-
-/* No measure of its own: body text fills .post's 928px column, matching the
-   reference, where the paragraphs run the full width of the same column that
-   holds the title and the rules. Leading is looser than the 1.65 body default
-   to carry the longer line — the reference runs 16px/28px for the same reason. */
-.prose {
-  margin-top: 1.6rem;
-  font-size: 1.02rem;
-  line-height: 1.75;
-  color: var(--text);
-}
-
-.prose > * + * {
-  margin-top: 1.1rem;
-}
-
-.prose h2 {
-  font-size: 1.3rem;
-  margin-top: 2rem;
-}
-
-.prose h3 {
-  font-size: 1.08rem;
-  margin-top: 1.6rem;
-}
-
-.prose a {
-  text-decoration: underline;
-  text-decoration-color: rgba(255, 63, 216, 0.4);
-  text-underline-offset: 3px;
-}
-
-.prose code {
-  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-  font-size: 0.88em;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 0.12rem 0.4rem;
-}
-
-.prose pre {
-  background: linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%), var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-  padding: 1rem 1.2rem;
-  overflow-x: auto;
-}
-
-.prose pre code {
-  background: none;
-  border: none;
-  padding: 0;
-}
-
-.prose blockquote {
-  position: relative;
-  margin: 0.5rem 0;
-  padding: 1rem 1.3rem 1rem 2.4rem;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%),
-    linear-gradient(120deg, rgba(255, 63, 216, 0.07), transparent 65%),
-    var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-.prose blockquote::before {
-  content: "\201D";
-  position: absolute;
-  left: 0.7rem;
-  top: 0.35rem;
-  font-style: normal;
-  font-size: 1.9rem;
-  line-height: 1;
-  color: var(--accent);
-  opacity: 0.55;
-}
-
-.prose ul,
-.prose ol {
-  padding-left: 1.4rem;
-}
-
-.prose img {
-  max-width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-
 /* ============ Footer ============ */
 .site-footer {
   padding: 0 1.5rem 1.75rem;
@@ -989,12 +781,6 @@ a:hover {
 
 /* Same as the header: the rule sits on the centered inner wrapper so it
    matches the content column width rather than running full-bleed. */
-/* Footer is one shared partial across every page, but its rule width tracks
-   whatever content column that page actually has: the project grid on the
-   homepage (var(--max-width), the default), the post list on the blog index
-   (matches .post-list), the prose column on an individual post (matches
-   .prose). body class is set per page — page-home on index.html, page-blog /
-   page-post filled into partials/layout.html by scripts/blog.mjs. */
 .footer-inner {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1011,17 +797,6 @@ a:hover {
    that same subtraction, not var(--max-width) directly. */
 .page-home .footer-inner {
   max-width: calc(var(--max-width) - 3rem);
-}
-
-.page-blog .footer-inner {
-  max-width: 58rem;
-}
-
-/* Post pages share the blog index's 58rem column (see .post), so the footer rule
-   lands on the same edges as the article above it. The old 68ch value was also
-   too narrow to hold the footer row, which needs 863px, on a single line. */
-.page-post .footer-inner {
-  max-width: 58rem;
 }
 
 .footer-row {
@@ -1073,34 +848,6 @@ a:hover {
   color: var(--accent) !important;
 }
 
-/* Blog pages only: fold "Back to top" into the same line as the rest of the
-   footer instead of stacking it below. .footer-inner switches from a
-   column (row, then to-top centered underneath) to a wrapping row so to-top
-   becomes just another item after the email line, with a "·" to match the
-   separators already used between the other items. */
-.page-blog .footer-inner,
-.page-post .footer-inner {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  /* Tighter than the homepage's 0.9rem: at the blog's narrower 928px column
-     the default spacing left the row 19px too wide, wrapping "Back to top"
-     onto its own line. */
-  gap: 0.4rem 0.5rem;
-}
-
-.page-blog .footer-row,
-.page-post .footer-row {
-  gap: 0.4rem 0.5rem;
-}
-
-.page-blog .to-top::before,
-.page-post .to-top::before {
-  content: "·";
-  color: rgba(214, 202, 240, 0.3);
-  margin-right: 0.5rem;
-}
-
 /* ============ Scroll reveal ============ */
 .reveal {
   opacity: 0;
@@ -1115,8 +862,7 @@ a:hover {
 
 /* Skip the reveal transition on elements already in view at load, so the
    projects list doesn't jump the moment IntersectionObserver first fires. */
-.projects .reveal.in,
-.blog-index .reveal.in {
+.projects .reveal.in {
   transition-duration: 0.4s;
 }
 
